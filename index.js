@@ -64,3 +64,11 @@ cron.schedule('0 6 * * *', () => {
 cron.schedule('*/30 * * * * *', () => {
     console.log("Thực hiện hành động sau mỗi 30 giây");
 });
+
+searchWeather(keyword)
+    .then(photoBuffer => sendPhotoToTelegram(photoBuffer))
+    .catch(error => console.log(error));
+
+searchWeather(keyword, true)
+    .then(photoBuffer => sendPhotoToTelegram(photoBuffer))
+    .catch(error => console.log(error));
