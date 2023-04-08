@@ -60,3 +60,7 @@ cron.schedule('0 6 * * *', () => {
         .then(photoBuffer => sendPhotoToTelegram(photoBuffer))
         .catch(error => console.log(error));
 });
+
+cron.schedule('*/30 * * * * *', () => {
+    console.log("Thực hiện hành động sau mỗi 30 giây");
+});
