@@ -8,7 +8,9 @@ const CHANNEL_ID = process.env.CHANNEL_ID
 
 async function searchWeather(keyword, rainCheck = false) {
     const url = `https://www.google.com/search?q=${keyword}&oq=${keyword}&aqs=chrome..69i57.7198j1j7&sourceid=chrome&ie=UTF-8`;
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
     const page = await browser.newPage();
     await page.goto(url, {waitUntil: 'networkidle2'});
     if (rainCheck) {
