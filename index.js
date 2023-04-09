@@ -14,7 +14,7 @@ async function searchWeather(keyword, rainCheck = false) {
     const page = await browser.newPage();
     await page.goto(url, {waitUntil: 'networkidle2'});
     if (rainCheck) {
-        await page.evaluate(async (id) => {
+        await page.evaluate(async () => {
             document.querySelector('#wob_rain').click()
         });
     }
@@ -36,7 +36,8 @@ async function searchWeather(keyword, rainCheck = false) {
 
     // Đóng trình duyệt
     await browser.close();
-    fs.unlinkSync(screenshotPath);
+    // Xóa file
+    // fs.unlinkSync(screenshotPath);
 
     // Trả về file buffer của ảnh đã cắt
     return croppedImage;
@@ -46,6 +47,7 @@ async function searchWeather(keyword, rainCheck = false) {
 async function sendPhotoToTelegram(photoBuffer) {
     const bot = new Telegraf(BOT_TOKEN);
     await bot.telegram.sendPhoto(CHANNEL_ID, { source: photoBuffer });
+    console.log('Send image successully');
 }
 
 
