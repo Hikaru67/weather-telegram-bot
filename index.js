@@ -61,10 +61,6 @@ cron.schedule('0 6 * * *', () => {
         .catch(error => console.log(error));
 });
 
-cron.schedule('*/30 * * * * *', () => {
-    console.log("Thực hiện hành động sau mỗi 30 giây");
-});
-
 const keyword = 'thời tiết mễ trì hà nội'
 searchWeather(keyword)
     .then(photoBuffer => sendPhotoToTelegram(photoBuffer))
