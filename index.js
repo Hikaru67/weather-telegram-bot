@@ -54,7 +54,7 @@ async function sendPhotoToTelegram(photoBuffer) {
 const cron = require('node-cron');
 
 cron.schedule('0 6 * * *', () => {
-    const keyword = 'thời tiết mễ trì hà nội'
+    const keyword = 'thời tiết mễ trì hà nội độ C'
     // Sử dụng hàm searchWeather() và sendPhotoToTelegram()
     searchWeather(keyword)
         .then(photoBuffer => sendPhotoToTelegram(photoBuffer))
@@ -65,7 +65,7 @@ cron.schedule('0 6 * * *', () => {
         .catch(error => console.log(error));
 });
 
-const keyword = 'thời tiết mễ trì hà nội'
+const keyword = 'thời tiết mễ trì hà nội độ C'
 searchWeather(keyword)
     .then(photoBuffer => sendPhotoToTelegram(photoBuffer))
     .catch(error => console.log(error));
