@@ -8,11 +8,13 @@ const CHANNEL_ID = process.env.CHANNEL_ID
 
 async function searchWeather(keyword, rainCheck = false) {
     const url = `https://www.google.com/search?q=${keyword}&oq=${keyword}&aqs=chrome..69i57.7198j1j7&sourceid=chrome&ie=UTF-8`;
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
     const page = await browser.newPage();
     await page.goto(url, {waitUntil: 'networkidle2'});
     if (rainCheck) {
-        await page.evaluate(async (id) => {
+        await page.evaluate(async () => {
             document.querySelector('#wob_rain').click()
         });
     }
@@ -34,7 +36,8 @@ async function searchWeather(keyword, rainCheck = false) {
 
     // Đóng trình duyệt
     await browser.close();
-    fs.unlinkSync(screenshotPath);
+    // Xóa file
+    // fs.unlinkSync(screenshotPath);
 
     // Trả về file buffer của ảnh đã cắt
     return croppedImage;
@@ -44,6 +47,7 @@ async function searchWeather(keyword, rainCheck = false) {
 async function sendPhotoToTelegram(photoBuffer) {
     const bot = new Telegraf(BOT_TOKEN);
     await bot.telegram.sendPhoto(CHANNEL_ID, { source: photoBuffer });
+    console.log('Send image successully');
 }
 
 
@@ -59,10 +63,6 @@ cron.schedule('0 6 * * *', () => {
     searchWeather(keyword, true)
         .then(photoBuffer => sendPhotoToTelegram(photoBuffer))
         .catch(error => console.log(error));
-});
-
-cron.schedule('*/30 * * * * *', () => {
-    console.log("Thực hiện hành động sau mỗi 30 giây");
 });
 
 const keyword = 'thời tiết mễ trì hà nội'
