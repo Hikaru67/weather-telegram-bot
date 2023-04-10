@@ -3,8 +3,8 @@ const fs = require('fs');
 const sharp = require('sharp')
 const { Telegraf } = require('telegraf');
 require('dotenv').config();
-// const BOT_TOKEN = process.env.BOT_TOKEN
-// const CHANNEL_ID = process.env.CHANNEL_ID
+const BOT_TOKEN = process.env.BOT_TOKEN
+const CHANNEL_ID = process.env.CHANNEL_ID
 var util = require('util');
 var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
 var log_stdout = process.stdout;

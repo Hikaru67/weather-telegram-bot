@@ -1,0 +1,6 @@
+ReferenceError: BOT_TOKEN is not defined
+    at sendPhotoToTelegram (/home/ubuntu/projects/self/weather/index.js:56:30)
+    at /home/ubuntu/projects/self/weather/index.js:82:26
+ReferenceError: BOT_TOKEN is not defined
+    at sendPhotoToTelegram (/home/ubuntu/projects/self/weather/index.js:56:30)
+    at /home/ubuntu/projects/self/weather/index.js:78:26
