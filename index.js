@@ -15,12 +15,17 @@ console.warn = function(d) { //
 };
 
 async function searchWeather(keyword, rainCheck = false) {
-    const url = `https://www.google.com/search?q=${keyword}&oq=${keyword}&aqs=chrome..69i57.7198j1j7&sourceid=chrome&ie=UTF-8`;
+    const url = `https://www.google.com/search?q=${keyword}&oq=${keyword}&ie=UTF-8`;
     const browser = await puppeteer.launch({
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     const page = await browser.newPage();
     await page.goto(url, {waitUntil: 'networkidle2'});
+    acp = await page.$x("(//button[contains(text(), '')])[4]")
+    if (acp[0]) {
+        await acp[0].click()
+    }
+
     if (rainCheck) {
         await page.evaluate(async () => {
             document.querySelector('#wob_rain').click()
