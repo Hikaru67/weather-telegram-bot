@@ -3,10 +3,10 @@ const fs = require('fs');
 const sharp = require('sharp')
 const { Telegraf } = require('telegraf');
 require('dotenv').config();
-// const BOT_TOKEN = process.env.BOT_TOKEN
-// const CHANNEL_ID = process.env.CHANNEL_ID
+const BOT_TOKEN = process.env.BOT_TOKEN
+const CHANNEL_ID = process.env.CHANNEL_ID
 var util = require('util');
-var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
+var log_file = fs.createWriteStream(__dirname + 'debug.log', {flags : 'w'});
 var log_stdout = process.stdout;
 
 console.warn = function(d) { //
@@ -57,21 +57,6 @@ async function sendPhotoToTelegram(photoBuffer) {
     await bot.telegram.sendPhoto(CHANNEL_ID, { source: photoBuffer });
     console.log('Send image successully');
 }
-
-
-const cron = require('node-cron');
-
-cron.schedule('0 6 * * *', () => {
-    const keyword = 'thời tiết mễ trì hà nội độ C'
-    // Sử dụng hàm searchWeather() và sendPhotoToTelegram()
-    searchWeather(keyword)
-        .then(photoBuffer => sendPhotoToTelegram(photoBuffer))
-        .catch(error => console.warn(error));
-
-    searchWeather(keyword, true)
-        .then(photoBuffer => sendPhotoToTelegram(photoBuffer))
-        .catch(error => console.warn(error));
-});
 
 const keyword = 'thời tiết mễ trì hà nội độ C'
 searchWeather(keyword)
