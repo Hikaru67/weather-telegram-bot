@@ -6,21 +6,22 @@ require('dotenv').config();
 const BOT_TOKEN = process.env.BOT_TOKEN
 const CHANNEL_ID = process.env.CHANNEL_ID
 var util = require('util');
-var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
+var log_file = fs.createWriteStream(__dirname + '/debug.log', { flags: 'w' });
 var log_stdout = process.stdout;
 
-console.warn = function(d) { //
-  log_file.write(util.format(d) + '\n');
-  log_stdout.write(util.format(d) + '\n');
+console.warn = function (d) { //
+    log_file.write(util.format(d) + '\n');
+    log_stdout.write(util.format(d) + '\n');
 };
 
 async function searchWeather(keyword, rainCheck = false) {
     const url = `https://www.google.com/search?q=${keyword}&oq=${keyword}&ie=UTF-8`;
     const browser = await puppeteer.launch({
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        args: ['--no-sandbox', '--disable-setuid-sandbox', '--font-render-hinting=none'],
     });
     const page = await browser.newPage();
-    await page.goto(url, {waitUntil: 'networkidle2'});
+    await page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36");
+    await page.goto(url, { waitUntil: 'networkidle2' });
     acp = await page.$x("(//button[contains(text(), '')])[4]")
     if (acp[0]) {
         await acp[0].click()
@@ -44,7 +45,7 @@ async function searchWeather(keyword, rainCheck = false) {
         return { width, height };
     });
     const croppedImage = await sharp(imageBuffer)
-        .extract({ width: Math.floor(width), height: Math.floor(height / 4), left: 0, top: 0 })
+        .extract({ width: Math.floor(width), height: Math.floor(height * 9 / 32), left: 0, top: 0 })
         .toBuffer();
 
     // Đóng trình duyệt
