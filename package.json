@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "vercel-build": "yarn install",
+    "vercel-build": "yarn install && npm install",
     "start": "node index.js"
   },
   "dependencies": {
