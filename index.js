@@ -81,10 +81,14 @@ cron.schedule('0 6 * * *', () => {
 });
 
 const keyword = 'thời tiết mễ trì hà nội độ C'
-searchWeather(keyword)
-    .then(photoBuffer => sendPhotoToTelegram(photoBuffer))
-    .catch(error => console.warn(error));
+// searchWeather(keyword)
+//     .then(photoBuffer => sendPhotoToTelegram(photoBuffer))
+//     .catch(error => console.warn(error));
 
-searchWeather(keyword, true)
-    .then(photoBuffer => sendPhotoToTelegram(photoBuffer))
-    .catch(error => console.warn(error));
+// searchWeather(keyword, true)
+//     .then(photoBuffer => sendPhotoToTelegram(photoBuffer))
+//     .catch(error => console.warn(error));
+
+cron.schedule('*/1 * * * *', () => {
+    console.log('muahahhaa')
+});
